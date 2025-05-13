@@ -32,7 +32,7 @@ def dataset_generator(dataset_tokens, batch_size, prompt_len):
 def prepare_dataset(
     model,
     device,
-    n_tokens: int,
+    total_tokens_in_data: int,
     batch_size,
     prompt_len,
     padding: bool,
@@ -54,7 +54,7 @@ def prepare_dataset(
         PAD_TOKEN = model.to_tokens(model.tokenizer.pad_token)[-1, -1].item()
 
     assert len(all_dataset_tokens.shape) == 2
-    total_prompts = n_tokens // (prompt_len)
+    total_prompts = total_tokens_in_data // (prompt_len)
     num_batches = total_prompts // batch_size
 
     if num_batches <= 1:

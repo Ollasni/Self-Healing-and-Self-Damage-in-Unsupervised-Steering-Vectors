@@ -70,6 +70,7 @@ def collect_direct_effect(
     model: HookedTransformer = None,
     collect_individual_neurons=False,
     cache_for_scaling: ActivationCache = None,
+    device: str = "mps",
 ) -> Tuple[
     Float[Tensor, "n_layer n_head batch pos_minus_one"],
     Float[Tensor, "n_layer batch pos_minus_one"],
@@ -85,8 +86,6 @@ def collect_direct_effect(
     display: whether to display the plot or return the data; if False, returns [head, pos] tensor of direct effects
     cache_for_scaling: the cache to use for the scaling; defaults to the global clean cache
     """
-
-    device = "mps" if torch.backends.mps.is_available() else "cpu"
 
     if de_cache is None or correct_tokens is None or model is None:
         raise ValueError("de_cache, correct_tokens, and model must not be None")

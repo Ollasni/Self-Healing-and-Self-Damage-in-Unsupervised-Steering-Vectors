@@ -310,7 +310,7 @@ class SelfRepairDataLoader:
         self.dataset_iterator, self.config.num_batches = prepare_dataset(
             model=self.model,
             device=self.config.device,
-            n_tokens=self.config.total_tokens,
+            total_tokens_in_data=self.config.total_tokens,
             batch_size=self.config.batch_size,
             prompt_len=self.config.prompt_len,
             # return_generator=True, # Use generator

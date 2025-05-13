@@ -1161,9 +1161,7 @@ def act_patch(
     progress_bar.close()
     for node_name, node_shape_dict in patching_nodes.shape_values.items():
         if verbose:
-            print(
-                f"results[{node_name!r}].shape = ({', '.join(f'{s}={v}' for s, v in node_shape_dict.items())})"
-            )
+            print(f"results[{node_name!r}].shape = ({', '.join(f'{s}={v}' for s, v in node_shape_dict.items())})")
     return {
         node_name: (
             t.tensor(results).reshape(
