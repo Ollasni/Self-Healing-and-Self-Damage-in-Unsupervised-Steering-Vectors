@@ -114,6 +114,8 @@ class SelfRepairConfigNew:
     prompt_len: int = 100
     total_tokens_in_data: int = 1_000
     percentile: float = 0.02  # For top instance selection based on DE
+    model_dtype: str = "float32"
+    use_local_attn: bool = False
     metrics: List[str] = field(
         default_factory=lambda: [
             "direct_effects",  # Keep for instance selection
@@ -587,6 +589,7 @@ class SelfRepairPipelineNew:
         print("Initializing calculator...")
         self.calculator = SelfRepairCalculatorNew(self.model, self.config)
         self.results: Dict[str, Tensor] = {}
+        
 
     def _load_model(self) -> HookedTransformer:
         """Loads the HookedTransformer model."""
@@ -597,7 +600,9 @@ class SelfRepairPipelineNew:
             center_writing_weights=True,
             fold_ln=True,
             refactor_factored_attn_matrices=False,  # Keep False unless specific reason
+            # use_local_attn=self.config.use_local_attn,
             device=self.config.device,
+            dtype=self.config.model_dtype,
             # dtype=torch.float16 # Uncomment if using float16
         )
         # Ensure necessary hook points are available
@@ -678,6 +683,7 @@ if __name__ == "__main__":
         total_tokens_in_data=1000,  # Smaller run for quicker example
         prompt_len=50,
         percentile=0.05,
+        model_dtype="float16",
         # total_tokens_in_data=1000,
         save_results=True,
         save_folder="data/output/new_self_repair_results_runhooks/",  # Changed folder
