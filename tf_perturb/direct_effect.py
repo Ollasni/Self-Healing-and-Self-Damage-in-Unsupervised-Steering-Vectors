@@ -179,7 +179,8 @@ def get_correct_logit_score(
     clean_tokens: Float[Tensor, "batch seq"],
 ):
     """
-    Returns the logit of the next token
+    Returns the logit of the next token, as correct logit scores
+    I.e. "teach-forced" estimation of current model performance.
 
     If per_prompt=True, return the array of differences rather than the average.
     """
